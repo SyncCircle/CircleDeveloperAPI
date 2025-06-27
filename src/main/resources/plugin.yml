@@ -1,0 +1,12 @@
+name: CircleDeveloperAPI
+version: '1.0'
+main: de.synccircle.circledeveloperapi.CircleDeveloperAPI
+api-version: '1.21'
+authors: [ SyncCircle ]
+
+commands:
+  language:
+    aliases:
+      - sprache
+      - languages
+    permission: circle.command.language
