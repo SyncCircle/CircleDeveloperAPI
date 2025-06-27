@@ -6,7 +6,7 @@
 
     <groupId>de.synccircle</groupId>
     <artifactId>circledeveloperapi</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>circledeveloperapi</name>
@@ -49,6 +49,14 @@
             </resource>
         </resources>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub SyncCircle Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/SyncCircle/CircleDeveloperAPI</url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
         <repository>
