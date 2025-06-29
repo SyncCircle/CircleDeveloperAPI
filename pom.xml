@@ -7,7 +7,7 @@
     <version>1.1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>circledeveloperapi</name>
+    <name>CircleDeveloperAPI</name>
 
     <licenses>
         <license>
@@ -17,9 +17,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
-        <developerConnection>scm:git:https://github.com/SyncCircle/CircleDeveloperAPI.git</developerConnection>
-        <url>http://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
+        <connection>scm:git:git@github.com:SyncCircle/CircleDeveloperAPI.git</connection>
+        <developerConnection>scm:git:git@github.com:SyncCircle/CircleDeveloperAPI.git</developerConnection>
+        <url>https://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -79,9 +79,8 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
+                    <tagBase>https://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <releaseProfiles>release</releaseProfiles>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
