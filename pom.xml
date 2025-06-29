@@ -4,7 +4,7 @@
 
     <groupId>de.synccircle</groupId>
     <artifactId>circledeveloperapi</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>circledeveloperapi</name>
@@ -17,9 +17,9 @@
     </licenses>
 
     <scm>
+        <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
         <developerConnection>scm:git:ssh://github.com:SyncCircle/CircleDeveloperAPI.git</developerConnection>
         <url>https://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
-      <tag>v1.0.2-SNAPSHOT</tag>
   </scm>
 
     <properties>
