@@ -7,6 +7,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CommandService {
 
@@ -32,6 +33,10 @@ public class CommandService {
             }
             if(configuration.configuration().getBoolean(command.getName(), false)) {
                 command.setExecutor(executor);
+            } else {
+                List<String> commandNames = command.getAliases();
+                commandNames.add(command.getName());
+                commandNames.forEach(names -> commandPlugin.getServer().getCommandMap().getKnownCommands().remove(names));
             }
         }
     }
