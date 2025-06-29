@@ -1,11 +1,12 @@
 package de.synccircle.circledeveloperapi;
 
+import de.synccircle.circledeveloperapi.command.CircleCommand;
 import de.synccircle.circledeveloperapi.config.Message;
+import de.synccircle.circledeveloperapi.service.CommandService;
 import de.synccircle.circledeveloperapi.service.ConfigService;
 import de.synccircle.circledeveloperapi.util.Configuration;
 import de.synccircle.circledeveloperapi.util.StringUtil;
 import lombok.Getter;
-import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -33,10 +34,7 @@ public final class CircleDeveloperAPI extends JavaPlugin {
     }
 
     private void init() {
-        Command command = this.getCommand("test");
-        if(command.getName().equalsIgnoreCase("test")) {
-
-        }
+        this.getCommandService().registerCommand(this, "circle", new CircleCommand(this));
     }
 
     private void initConfigs() {
