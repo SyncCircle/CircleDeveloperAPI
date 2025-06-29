@@ -1,29 +1,25 @@
 package de.synccircle.circledeveloperapi;
 
-import de.synccircle.circledeveloperapi.command.LanguageCommand;
-import de.synccircle.circledeveloperapi.config.ConfigService;
-import de.synccircle.circledeveloperapi.language.LanguageService;
+import de.synccircle.circledeveloperapi.config.Message;
+import de.synccircle.circledeveloperapi.service.ConfigService;
+import de.synccircle.circledeveloperapi.util.Configuration;
+import de.synccircle.circledeveloperapi.util.StringUtil;
 import lombok.Getter;
+import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
+import java.io.IOException;
 
 public final class CircleDeveloperAPI extends JavaPlugin {
 
     @Getter
-    private File storage;
-
-    @Getter
     private ConfigService configService;
-    @Getter
-    private LanguageService languageService;
 
     @Override
     public void onEnable() {
-        this.createStorage();
-
         this.configService = new ConfigService(this);
-        this.languageService = new LanguageService(this);
+
+        this.initConfigs();
 
         this.init();
     }
@@ -34,13 +30,32 @@ public final class CircleDeveloperAPI extends JavaPlugin {
     }
 
     private void init() {
-        this.getCommand("language").setExecutor(new LanguageCommand(this));
+        Command command = this.getCommand("test");
+        if(command.getName().equalsIgnoreCase("test")) {
+
+        }
     }
 
-    private void createStorage() {
-        this.storage = new File("/home/minecraft/.storage/" + this.getServer().getPort());
-        if(this.storage.exists()) {
-            boolean ignored = this.storage.mkdirs();
+    private void initConfigs() {
+        //init message config
+        for(Message message : Message.values()) {
+            Configuration configuration;
+            try {
+                configuration = this.getConfigService().loadMessageConfig(this.getName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if(configuration.configuration().getString(message.name().toLowerCase()) == null) {
+                configuration.configuration().set(message.name().toLowerCase(), message.getDefaultMessage());
+                try {
+                    configuration.configuration().save(configuration.file());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                message.setMessage(StringUtil.colorizeString(message.getDefaultMessage()));
+                continue;
+            }
+            message.setMessage(StringUtil.colorizeString(configuration.configuration().getString(message.name().toLowerCase())));
         }
     }
 
