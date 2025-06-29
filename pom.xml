@@ -60,7 +60,6 @@
                 <configuration>
                     <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <releaseProfiles>release</releaseProfiles>
 
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
