@@ -4,7 +4,7 @@
 
     <groupId>de.synccircle</groupId>
     <artifactId>circledeveloperapi</artifactId>
-    <version>1.1.7-SNAPSHOT</version>
+    <version>1.1.7</version>
     <packaging>jar</packaging>
 
     <name>CircleDeveloperAPI</name>
@@ -20,7 +20,7 @@
         <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
         <developerConnection>scm:git:https://github.com/SyncCircle/CircleDeveloperAPI.git</developerConnection>
         <url>http://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
-        <tag>HEAD</tag>
+        <tag>1.1.7</tag>
     </scm>
 
     <profiles>
@@ -81,6 +81,7 @@
                 <configuration>
                     <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
