@@ -20,7 +20,7 @@
         <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
         <developerConnection>scm:git:git://github.com:SyncCircle/CircleDeveloperAPI.git</developerConnection>
         <url>http://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
-    <tag>circledeveloperapi-1.0.2</tag>
+    <tag>,</tag>
   </scm>
 
     <properties>
@@ -58,7 +58,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <tagBase>https://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
+                    <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <releaseProfiles>release</releaseProfiles>
 
