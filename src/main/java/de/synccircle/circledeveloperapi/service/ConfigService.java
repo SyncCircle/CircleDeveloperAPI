@@ -15,11 +15,6 @@ public class ConfigService {
     @Getter
     private final File storageFolder = new File("/home/minecraft/.storage");
 
-    @Getter
-    private final Map<String, Configuration> configurations = new HashMap<>();
-    @Getter
-    private final Map<String, Configuration> messages = new HashMap<>();
-
     public ConfigService(CircleDeveloperAPI plugin) {
         this.plugin = plugin;
 
