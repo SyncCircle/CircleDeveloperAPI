@@ -7,8 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ConfigService {
 
@@ -35,7 +33,7 @@ public class ConfigService {
     }
 
     //To create/Load a config /server folder, plugin name and file name/
-    public Configuration loadConfig(int port, String pluginName, String fileName) throws IOException {
+    public Configuration loadPluginConfig(int port, String pluginName, String fileName) throws IOException {
         File folders = new File(this.storageFolder.getPath() + "/" + port + "/" + pluginName);
         if(!folders.exists()) {
             boolean ignored = folders.mkdirs();
@@ -55,6 +53,20 @@ public class ConfigService {
             boolean ignored = folders.mkdirs();
         }
         File file = new File(folders, "config.yml");
+        if(file.exists()) {
+            boolean ignored = file.createNewFile();
+        }
+
+        return new Configuration(file, YamlConfiguration.loadConfiguration(file));
+    }
+
+    //To create/load a custom config
+    public Configuration loadConfig(String pathName, String fileName) throws IOException {
+        File folders = new File(this.storageFolder.getPath() + pathName);
+        if(!folders.exists()) {
+            boolean ignored = folders.mkdirs();
+        }
+        File file = new File(folders, fileName);
         if(file.exists()) {
             boolean ignored = file.createNewFile();
         }
