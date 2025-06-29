@@ -45,7 +45,7 @@
         <repository>
             <id>github</id>
             <name>GitHub SyncCircle Apache Maven Packages</name>
-            <url>https://github.com/SyncCircle/CircleDeveloperAPI</url>
+            <url>https://maven.pkg.github.com/SyncCircle/CircleDeveloperAPI</url>
         </repository>
     </distributionManagement>
 
@@ -81,7 +81,7 @@
                 <configuration>
                     <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <releaseProfile>release</releaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
