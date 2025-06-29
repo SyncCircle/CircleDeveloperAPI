@@ -18,7 +18,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
-        <developerConnection>scm:git:git://github.com:SyncCircle/CircleDeveloperAPI.git</developerConnection>
+        <developerConnection>scm:git:https://github.com:SyncCircle/CircleDeveloperAPI.git</developerConnection>
         <url>http://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
     <tag>circledeveloperapi-1.0.2</tag>
   </scm>
