@@ -5,8 +5,13 @@ api-version: '1.21'
 authors: [ SyncCircle ]
 
 commands:
-  language:
-    aliases:
-      - sprache
-      - languages
-    permission: circle.command.language
+  circle:
+    permission: circle.command.circle
+
+permissions:
+  circle.command.circle:
+    description: ''
+  circle.command.circle.reload:
+    description: ''
+  circle.command.circle.reload.messages:
+    description: ''
