@@ -4,7 +4,7 @@
 
     <groupId>de.synccircle</groupId>
     <artifactId>circledeveloperapi</artifactId>
-    <version>1.1.8-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>CircleDeveloperAPI</name>
@@ -15,26 +15,6 @@
             <url>https://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
-
-    <scm>
-        <connection>scm:git:git://github.com/SyncCircle/CircleDeveloperAPI.git</connection>
-        <developerConnection>scm:git:https://github.com/SyncCircle/CircleDeveloperAPI.git</developerConnection>
-        <url>http://github.com/SyncCircle/CircleDeveloperAPI/tree/main</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <my.server.id>github</my.server.id>
-                <server>github</server>
-            </properties>
-        </profile>
-    </profiles>
 
     <properties>
         <java.version>21</java.version>
@@ -73,19 +53,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                    <checkModificationExcludes>
-                        <checkModificationExclude>pom.xml</checkModificationExclude>
-                    </checkModificationExcludes>
-                </configuration>
             </plugin>
         </plugins>
         <resources>
