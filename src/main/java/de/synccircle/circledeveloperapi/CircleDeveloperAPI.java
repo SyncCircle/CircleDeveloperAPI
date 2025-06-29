@@ -14,10 +14,13 @@ public final class CircleDeveloperAPI extends JavaPlugin {
 
     @Getter
     private ConfigService configService;
+    @Getter
+    private CommandService commandService;
 
     @Override
     public void onEnable() {
         this.configService = new ConfigService(this);
+        this.commandService = new CommandService(this);
 
         this.initConfigs();
 
