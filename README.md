@@ -1,2 +1,2 @@
-# NaturiaMC.de DeveloperAPI
+# CircleDeveloperAPI
 ## Developed by [@SyncCircle](https://github.com/SyncCircle)
