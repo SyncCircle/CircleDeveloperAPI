@@ -9,7 +9,8 @@ public enum Message {
     PREFIX("&a&lCircle §8» "),
     NO_PERMISSION("&cDazu hast du keine Rechte!"),
     ERROR("&4ERROR"),
-    LINE("&8&m---------------------------------------");
+    LINE("&8&m---------------------------------------"),
+    COMMAND_CIRCLE_RELOAD_CONFIRM("&7Die Konfiguration für &a%config% &7wurde neu gelauden.");
 
     private final String defaultMessage;
 
