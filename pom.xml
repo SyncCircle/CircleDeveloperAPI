@@ -23,6 +23,19 @@
         <tag>HEAD</tag>
     </scm>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <my.server.id>github</my.server.id>
+                <server>github</server>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,7 +81,7 @@
                 <configuration>
                     <tagBase>http://github.com/SyncCircle/CircleDeveloperAPI/tags</tagBase>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-
+                    <releaseProfile>release</releaseProfile>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
