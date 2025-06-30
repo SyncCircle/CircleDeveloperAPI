@@ -1,15 +1,11 @@
 package de.synccircle.circledeveloperapi;
 
 import de.synccircle.circledeveloperapi.command.CircleCommand;
-import de.synccircle.circledeveloperapi.config.Message;
 import de.synccircle.circledeveloperapi.service.CommandService;
 import de.synccircle.circledeveloperapi.service.ConfigService;
-import de.synccircle.circledeveloperapi.util.Configuration;
-import de.synccircle.circledeveloperapi.util.StringUtil;
+import de.synccircle.circledeveloperapi.service.MessageService;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.IOException;
 
 public final class CircleDeveloperAPI extends JavaPlugin {
 
@@ -17,11 +13,14 @@ public final class CircleDeveloperAPI extends JavaPlugin {
     private ConfigService configService;
     @Getter
     private CommandService commandService;
+    @Getter
+    private MessageService messageService;
 
     @Override
     public void onEnable() {
         this.configService = new ConfigService(this);
         this.commandService = new CommandService(this);
+        this.messageService = new MessageService(this);
 
         this.initConfigs();
 
@@ -39,25 +38,7 @@ public final class CircleDeveloperAPI extends JavaPlugin {
 
     private void initConfigs() {
         //init message config
-        for(Message message : Message.values()) {
-            Configuration configuration;
-            try {
-                configuration = this.getConfigService().loadMessageConfig(this.getName());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if(configuration.configuration().getString(message.name().toLowerCase()) == null) {
-                configuration.configuration().set(message.name().toLowerCase(), message.getDefaultMessage());
-                try {
-                    configuration.configuration().save(configuration.file());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                message.setMessage(StringUtil.colorizeString(message.getDefaultMessage()));
-                continue;
-            }
-            message.setMessage(StringUtil.colorizeString(configuration.configuration().getString(message.name().toLowerCase())));
-        }
+        this.getMessageService().load();
     }
 
     public static CircleDeveloperAPI getInstance() {
