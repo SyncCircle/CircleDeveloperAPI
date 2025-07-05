@@ -1,6 +1,6 @@
 package de.synccircle.circledeveloperapi;
 
-import de.synccircle.circledeveloperapi.command.CircleCommand;
+import de.synccircle.circledeveloperapi.command.CircleDeveloperAPICommand;
 import de.synccircle.circledeveloperapi.service.CommandService;
 import de.synccircle.circledeveloperapi.service.ConfigService;
 import de.synccircle.circledeveloperapi.service.MessageService;
@@ -33,7 +33,7 @@ public final class CircleDeveloperAPI extends JavaPlugin {
     }
 
     private void init() {
-        this.getCommandService().registerCommand(this, "circle", new CircleCommand(this));
+        this.getCommandService().registerCommand(this, "circle", new CircleDeveloperAPICommand(this));
     }
 
     private void initConfigs() {
