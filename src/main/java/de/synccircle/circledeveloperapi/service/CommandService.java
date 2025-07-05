@@ -3,11 +3,14 @@ package de.synccircle.circledeveloperapi.service;
 import de.synccircle.circledeveloperapi.CircleDeveloperAPI;
 import de.synccircle.circledeveloperapi.util.Command;
 import de.synccircle.circledeveloperapi.util.Configuration;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.command.PluginCommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CommandService {
 
@@ -22,6 +25,11 @@ public class CommandService {
     public void registerCommand(Command command) {
         PluginCommand pluginCommand = command.plugin().getServer().getPluginCommand(command.name());
         if(pluginCommand != null) {
+            pluginCommand.setExecutor(command.executor());
+            if(!this.commandCache.contains(command)) {
+                this.commandCache.add(command);
+            }
+
             Configuration configuration;
             try {
                 configuration = this.plugin.getConfigService().loadPluginConfig(command.plugin().getServer().getPort(), command.plugin().getName(), "commands.yml");
@@ -29,31 +37,38 @@ public class CommandService {
                 throw new RuntimeException(e);
             }
 
-            if(!configuration.configuration().contains(pluginCommand.getName())) {
-                configuration.configuration().set(pluginCommand.getName(), true);
+            if(!configuration.configuration().contains(command.name())) {
+                configuration.configuration().set(command.name(), true);
                 configuration.save();
             }
-            if(configuration.configuration().getBoolean(pluginCommand.getName(), false)) {
-                pluginCommand.setExecutor(command.executor());
-            } else {
-                List<String> commandNames = pluginCommand.getAliases();
-                commandNames.add(pluginCommand.getName());
-                commandNames.forEach(name -> command.plugin().getServer().getCommandMap().getKnownCommands().remove(name));
-            }
-            if(!this.commandCache.contains(command)) {
-                this.commandCache.add(command);
-            }
+
+            this.handle(command, configuration);
         }
     }
 
     public void reloadCommands() {
         for(Command command : this.commandCache) {
-            PluginCommand pluginCommand = command.plugin().getServer().getPluginCommand(command.name());
-            if(pluginCommand != null) {
-                pluginCommand.unregister(command.plugin().getServer().getCommandMap());
+            Configuration configuration;
+            try {
+                configuration = this.plugin.getConfigService().loadPluginConfig(command.plugin().getServer().getPort(), command.plugin().getName(), "commands.yml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
-            this.registerCommand(command);
+            this.handle(command, configuration);
+        }
+    }
+
+    private void handle(Command command, Configuration configuration) {
+        Group defaultGroup = this.plugin.getLuckPerms().getGroupManager().getGroup("default");
+        if(defaultGroup != null) {
+            if(!configuration.configuration().getBoolean(command.name(), false)) {
+                defaultGroup.data().add(PermissionNode.builder().permission("circle.command." + command.name()).value(false).build());
+            } else {
+                defaultGroup.data().remove(PermissionNode.builder().permission("circle.command." + command.name()).build());
+            }
+        } else {
+            this.plugin.getLogger().log(Level.SEVERE, "The " + command.name() + " command could not be disabled. No group named \"default\" was found.");
         }
     }
 }
