@@ -11,8 +11,8 @@ public enum MainMessage {
     ERROR("&4ERROR"),
     LINE("&8&m---------------------------------------"),
 
-    COMMAND_CIRCLE_HELP("&7Nutze: /circle reload messages"),
-    COMMAND_CIRCLE_RELOAD_CONFIRM("&7Die Konfiguration für &a%config% &7wurde neu geladen.");
+    COMMAND_CIRCLEDEVELOPERAPI_HELP("&7Nutze: /circle reload messages"),
+    COMMAND_CIRCLEDEVELOPERAPI_RELOAD_CONFIRM("&7Die Konfiguration für &a%config% &7wurde neu geladen.");
 
     private final String defaultMessage;
 
