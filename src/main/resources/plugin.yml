@@ -5,13 +5,13 @@ api-version: '1.21'
 authors: [ SyncCircle ]
 
 commands:
-  circle:
-    permission: circle.command.circle
+  circledeveloperapi:
+    permission: circle.command.circledeveloperapi
 
 permissions:
-  circle.command.circle:
+  circle.command.circledeveloperapi:
     description: ''
-  circle.command.circle.reload:
+  circle.command.circledeveloperapi.reload:
     description: ''
-  circle.command.circle.reload.messages:
+  circle.command.circledeveloperapi.reload.messages:
     description: ''
