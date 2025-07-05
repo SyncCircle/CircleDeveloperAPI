@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public enum APIMessage {
+public enum MainMessage {
 
     PREFIX("&a&lCircle §8» "),
     NO_PERMISSION("&cDazu hast du keine Rechte!"),
@@ -19,11 +19,11 @@ public enum APIMessage {
     @Setter
     private String message;
 
-    APIMessage(String defaultMessage) {
+    MainMessage(String defaultMessage) {
         this.defaultMessage = defaultMessage;
     }
 
-    public static String getMessageWithPrefix(APIMessage message) {
+    public static String getMessageWithPrefix(MainMessage message) {
         return PREFIX.getMessage() + message.getMessage();
     }
 
