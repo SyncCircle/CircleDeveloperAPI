@@ -33,7 +33,7 @@ public final class CircleDeveloperAPI extends JavaPlugin {
     }
 
     private void init() {
-        this.getCommandService().registerCommand(this, "circle", new CircleDeveloperAPICommand(this));
+        this.getCommandService().registerCommand(this, "circledeveloperapi", new CircleDeveloperAPICommand(this));
     }
 
     private void initConfigs() {
