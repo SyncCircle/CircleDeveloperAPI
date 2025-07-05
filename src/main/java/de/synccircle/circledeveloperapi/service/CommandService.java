@@ -18,8 +18,21 @@ public class CommandService {
 
     private final List<Command> commandCache = new ArrayList<>();
 
+    private Group group;
+
     public CommandService(CircleDeveloperAPI plugin) {
         this.plugin = plugin;
+
+        this.init();
+    }
+
+    private void init() {
+        this.plugin.getLuckPerms().getGroupManager().createAndLoadGroup("disabled-commands");
+
+        this.group = this.plugin.getLuckPerms().getGroupManager().getGroup("disabled-commands");
+        if(this.group == null) {
+            this.plugin.getLogger().log(Level.SEVERE, "Commands cannot be enabled or disabled there is no \"disabled-commands\" group.");
+        }
     }
 
     public void registerCommand(Command command) {
@@ -62,15 +75,14 @@ public class CommandService {
     }
 
     private void handle(Command command, Configuration configuration, String permission) {
-        Group defaultGroup = this.plugin.getLuckPerms().getGroupManager().getGroup("default");
-        if(defaultGroup != null) {
+        if(this.group != null) {
             if(!configuration.configuration().getBoolean(command.getName(), false)) {
-                defaultGroup.data().add(PermissionNode.builder().permission(permission).value(false).build());
+                this.group.data().add(PermissionNode.builder().permission(permission).value(false).build());
             } else {
-                defaultGroup.data().remove(PermissionNode.builder().permission(permission).build());
+                this.group.data().remove(PermissionNode.builder().permission(permission).build());
             }
         } else {
-            this.plugin.getLogger().log(Level.SEVERE, "The " + command.getName() + " command could not be disabled. No group named \"default\" was found.");
+            this.plugin.getLogger().log(Level.SEVERE, "The " + command.getName() + " command could not be changed. No group named \"disabled-commands\" was found.");
         }
     }
 }
