@@ -1,43 +1,55 @@
 package de.synccircle.circledeveloperapi.service;
 
 import de.synccircle.circledeveloperapi.CircleDeveloperAPI;
+import de.synccircle.circledeveloperapi.util.Command;
 import de.synccircle.circledeveloperapi.util.Configuration;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommandService {
 
     private final CircleDeveloperAPI plugin;
 
+    private final List<Command> commandCache = new ArrayList<>();
+
     public CommandService(CircleDeveloperAPI plugin) {
         this.plugin = plugin;
     }
 
-    public void registerCommand(Plugin commandPlugin, String name, CommandExecutor executor) {
-        PluginCommand command = commandPlugin.getServer().getPluginCommand(name);
-        if(command != null) {
+    public void registerCommand(Command command) {
+        PluginCommand pluginCommand = command.plugin().getServer().getPluginCommand(command.name());
+        if(pluginCommand != null) {
             Configuration configuration;
             try {
-                configuration = this.plugin.getConfigService().loadPluginConfig(commandPlugin.getServer().getPort(), commandPlugin.getName(), "commands.yml");
+                configuration = this.plugin.getConfigService().loadPluginConfig(command.plugin().getServer().getPort(), command.plugin().getName(), "commands.yml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            if(!configuration.configuration().contains(command.getName())) {
-                configuration.configuration().set(command.getName(), true);
+            if(!configuration.configuration().contains(pluginCommand.getName())) {
+                configuration.configuration().set(pluginCommand.getName(), true);
                 configuration.save();
             }
-            if(configuration.configuration().getBoolean(command.getName(), false)) {
-                command.setExecutor(executor);
+            if(configuration.configuration().getBoolean(pluginCommand.getName(), false)) {
+                pluginCommand.setExecutor(command.executor());
             } else {
-                List<String> commandNames = command.getAliases();
-                commandNames.add(command.getName());
-                commandNames.forEach(names -> commandPlugin.getServer().getCommandMap().getKnownCommands().remove(names));
+                List<String> commandNames = pluginCommand.getAliases();
+                commandNames.add(pluginCommand.getName());
+                commandNames.forEach(name -> command.plugin().getServer().getCommandMap().getKnownCommands().remove(name));
             }
+            if(!this.commandCache.contains(command)) {
+                this.commandCache.add(command);
+            }
+        }
+    }
+
+    public void reloadCommands() {
+        for(Command command : this.commandCache) {
+            this.plugin.getServer().getCommandMap().clearCommands();
+            this.registerCommand(command);
         }
     }
 }
