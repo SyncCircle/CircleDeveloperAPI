@@ -48,7 +48,11 @@ public class CommandService {
 
     public void reloadCommands() {
         for(Command command : this.commandCache) {
-            this.plugin.getServer().getCommandMap().clearCommands();
+            PluginCommand pluginCommand = command.plugin().getServer().getPluginCommand(command.name());
+            if(pluginCommand != null) {
+                pluginCommand.unregister(command.plugin().getServer().getCommandMap());
+            }
+
             this.registerCommand(command);
         }
     }
