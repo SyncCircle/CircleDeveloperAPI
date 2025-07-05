@@ -6,9 +6,14 @@ import de.synccircle.circledeveloperapi.service.ConfigService;
 import de.synccircle.circledeveloperapi.service.MessageService;
 import de.synccircle.circledeveloperapi.util.Command;
 import lombok.Getter;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CircleDeveloperAPI extends JavaPlugin {
+
+    @Getter
+    private LuckPerms luckPerms;
 
     @Getter
     private ConfigService configService;
@@ -19,6 +24,8 @@ public final class CircleDeveloperAPI extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.luckPerms = LuckPermsProvider.get();
+
         this.configService = new ConfigService(this);
         this.commandService = new CommandService(this);
         this.messageService = new MessageService(this);
