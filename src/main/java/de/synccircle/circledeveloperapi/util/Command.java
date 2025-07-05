@@ -3,7 +3,6 @@ package de.synccircle.circledeveloperapi.util;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 
 @Getter
