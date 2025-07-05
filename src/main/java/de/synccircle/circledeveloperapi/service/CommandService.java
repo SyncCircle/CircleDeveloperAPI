@@ -23,26 +23,28 @@ public class CommandService {
     }
 
     public void registerCommand(Command command) {
-        PluginCommand pluginCommand = command.plugin().getServer().getPluginCommand(command.name());
+        PluginCommand pluginCommand = command.getPlugin().getServer().getPluginCommand(command.getName());
         if(pluginCommand != null) {
-            pluginCommand.setExecutor(command.executor());
+            command.setPermission(pluginCommand.getPermission());
+            pluginCommand.setExecutor(command.getExecutor());
+
             if(!this.commandCache.contains(command)) {
                 this.commandCache.add(command);
             }
 
             Configuration configuration;
             try {
-                configuration = this.plugin.getConfigService().loadPluginConfig(command.plugin().getServer().getPort(), command.plugin().getName(), "commands.yml");
+                configuration = this.plugin.getConfigService().loadPluginConfig(command.getPlugin().getServer().getPort(), command.getPlugin().getName(), "commands.yml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            if(!configuration.configuration().contains(command.name())) {
-                configuration.configuration().set(command.name(), true);
+            if(!configuration.configuration().contains(command.getName())) {
+                configuration.configuration().set(command.getName(), true);
                 configuration.save();
             }
 
-            this.handle(command, configuration);
+            this.handle(command, configuration, command.getPermission());
         }
     }
 
@@ -50,25 +52,25 @@ public class CommandService {
         for(Command command : this.commandCache) {
             Configuration configuration;
             try {
-                configuration = this.plugin.getConfigService().loadPluginConfig(command.plugin().getServer().getPort(), command.plugin().getName(), "commands.yml");
+                configuration = this.plugin.getConfigService().loadPluginConfig(command.getPlugin().getServer().getPort(), command.getPlugin().getName(), "commands.yml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            this.handle(command, configuration);
+            this.handle(command, configuration, command.getPermission());
         }
     }
 
-    private void handle(Command command, Configuration configuration) {
+    private void handle(Command command, Configuration configuration, String permission) {
         Group defaultGroup = this.plugin.getLuckPerms().getGroupManager().getGroup("default");
         if(defaultGroup != null) {
-            if(!configuration.configuration().getBoolean(command.name(), false)) {
-                defaultGroup.data().add(PermissionNode.builder().permission("circle.command." + command.name()).value(false).build());
+            if(!configuration.configuration().getBoolean(command.getName(), false)) {
+                defaultGroup.data().add(PermissionNode.builder().permission(permission).value(false).build());
             } else {
-                defaultGroup.data().remove(PermissionNode.builder().permission("circle.command." + command.name()).build());
+                defaultGroup.data().remove(PermissionNode.builder().permission(permission).build());
             }
         } else {
-            this.plugin.getLogger().log(Level.SEVERE, "The " + command.name() + " command could not be disabled. No group named \"default\" was found.");
+            this.plugin.getLogger().log(Level.SEVERE, "The " + command.getName() + " command could not be disabled. No group named \"default\" was found.");
         }
     }
 }
