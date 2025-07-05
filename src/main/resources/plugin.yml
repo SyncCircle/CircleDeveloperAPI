@@ -1,5 +1,5 @@
 name: CircleDeveloperAPI
-version: '1.1.1'
+version: ${project.version}
 main: de.synccircle.circledeveloperapi.CircleDeveloperAPI
 api-version: '1.21'
 authors: [ SyncCircle ]
